@@ -1,12 +1,15 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const cors = require("cors");
+const swaggerUi = require('swagger-ui-express');
+const swagger = require('../swagger.json');
 
 const { endpoint } = require('../config/index');
 const empRouter = require('../src/routes/index');
 
 module.exports = () => {
     app = express();
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger));
     app.use(cors());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());

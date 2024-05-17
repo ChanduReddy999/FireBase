@@ -4,6 +4,7 @@ const router= express.Router()
 const userControllers = require('../controllers/index')
 
 router.post('/contactus',userControllers.contactUsController)
+router.get('/',userControllers.contactDetailsController)
 
 
 

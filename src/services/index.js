@@ -40,6 +40,21 @@ const contactUsService = async (req, res) => {
   }
 }
 
+const contactDetailsService = async()=>{
+  try {
+    const contactData = db.collection("ContactUs");
+    const res1 =await contactData.get();
+    const finalData = []
+    res1.forEach((doc)=>{
+      finalData.push(doc.data())
+    })
+    // console.log("finalData",finalData);
+    return { status:200, messafe:"success", data:finalData}
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const portifiMail = (FullName,Email,Subject,Message) => {
   try {
     var transporter = nodemailer.createTransport({
@@ -74,7 +89,7 @@ const portifiMail = (FullName,Email,Subject,Message) => {
 }
 
 module.exports = {
-  contactUsService
+  contactUsService,contactDetailsService
 };
 
 
