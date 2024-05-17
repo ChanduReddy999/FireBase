@@ -3,7 +3,7 @@
     "info":{
         "title":"Swagger FireBase"
     },
-    "host":"https://firebase-uiab.onrender.com",
+    "host":"firebase-uiab.onrender.com",
     "basePath":"/prod/v1",
     "schemes":[
         "http",
