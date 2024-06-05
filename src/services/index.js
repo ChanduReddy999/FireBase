@@ -33,7 +33,8 @@ const contactUsService = async (req, res) => {
     const response = await db.collection("ContactUs").add(contactDetails);
 
     portifiMail(contactDetails.FullName,contactDetails.Email,contactDetails.Subject,contactDetails.Message);
-
+    returnPortifiMail(contactDetails.FullName,contactDetails.Email);
+    
     return { status: 200, message: "success", data: [] }
   } catch (error) {
     return { status: 300, message: "error", data: null }
@@ -72,6 +73,40 @@ const portifiMail = (FullName,Email,Subject,Message) => {
       html: `<h1>Contacted from Portfolio with mail: <span>${Email}</span></h1>
       <p>Hello,This is ${FullName}</p>
       <p>${Message}</p>`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    return { status: 200, message: "success", data: [] }
+  } catch (error) {
+    return { status: 300, message: "error", data: [] }
+  }
+}
+
+
+const returnPortifiMail = (FullName,Email) => {
+  try {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'cmfriend111@gmail.com',
+        pass: process.env.PASSKEY
+      }
+    });
+
+    var mailOptions = {
+      from: 'cmfriend111@gmail.com',
+      to: `${Email}`,
+      subject: 'This is an auto-generated mail',
+      html: `<h1>Checking your Email</h1>
+      <p>Dear ${FullName}</p>
+      <p>You will receive an email from ChanduReddy as soon as possible...</p>`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
